@@ -12,51 +12,64 @@
     background: #ccc8c0;
     min-height: 100vh;
     padding: 52px 40px;
+    overflow-y: scroll;
   }
-  .container { max-width: 1100px; margin: 0 auto; }
+  .container { max-width: 1000px; margin: 0 auto; }
   h1 { font-size: 26px; font-weight: 700; margin-bottom: 3px; letter-spacing: -0.5px; color: #1a1a1a; }
   .subtitle { font-size: 12px; color: #999; margin-bottom: 22px; }
+
+  /* ── 리셋 버튼 ── */
+  .title-bar { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; }
+  .title-bar .titles h1 { margin-bottom: 3px; }
+  .title-bar .subtitle { margin-bottom: 0; }
+  .reset-btn {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 10px;
+    border: 1.5px solid #d8d2c8; background: #fff;
+    font-family: inherit; font-size: 12px; font-weight: 600;
+    color: #a89888; cursor: pointer;
+    transition: all .15s;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  }
+  .reset-btn:hover { border-color: #c86858; color: #c86858; background: #fff5f3; }
+  .reset-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
 
   .table-outer { border-radius: 14px; box-shadow: 0 2px 24px rgba(0,0,0,0.13); }
   .table-wrap { background: #fff; border-radius: 14px; overflow: visible; }
   .row.hd { border-radius: 14px 14px 0 0; }
   .row.add { border-radius: 0 0 14px 14px; }
 
-  /* cols: check(48) | 항목(1fr) | 난이도(80px) | 기간(240px) | 수량(200px) | 단가(150px) */
   .row {
     display: grid;
-    grid-template-columns: 48px 1fr 80px 240px 200px 150px;
+    grid-template-columns: 220px 100px 235px 175px 140px 130px;
     align-items: center;
     border-bottom: 1px solid #eeebe5;
-    min-height: 56px;
+    min-height: 45px;
   }
   .row:last-child { border-bottom: none; }
-  .row:hover:not(.hd):not(.total):not(.sec):not(.add) { background: #faf8f4; }
+  .row:hover:not(.hd):not(.total):not(.sec-main):not(.add) { background: #faf8f4; }
   .row.on { background: #f7f3ed; }
 
   .row.hd { background: #f5f2ec; min-height: 38px; border-bottom: 1px solid #e8e4dc; }
   .row.hd .c { font-size: 11px; color: #aaa49c; font-weight: 500; justify-content: center; }
-  .row.hd .c.hd-name { justify-content: flex-start; padding-left: 16px; }
+  .row.hd .c.hd-name { justify-content: flex-start; padding-left: 76px; }
+  .row.hd .c.hd-price { justify-content: flex-end; padding-right: 80px; }
 
-  /* 대분류 섹션 헤더 */
-  .row.sec-main {
-    background: #e8e2d8;
-    min-height: 32px;
-    border-bottom: 1px solid #d8d0c4;
-  }
-  .row.sec-main .c {
-    font-size: 11px; font-weight: 700; color: #7a6a58;
-    letter-spacing: 0.3px; padding-left: 16px; justify-content: flex-start;
-    grid-column: 1/-1;
-  }
+  .row.sec-main { background: #e8e2d8; min-height: 22px; border-bottom: 1px solid #d8d0c4; cursor: default; }
+  .row.sec-main:hover { background: #e8e2d8 !important; }
+  .row.sec-main .c { font-size: 11px; font-weight: 700; color: #7a6a58; letter-spacing: 0.3px; padding-left: 16px; justify-content: flex-start; grid-column: 1/-1; }
 
-  .row.total { background: #1a1714; min-height: 58px; border-bottom: none; }
+  .row.total { background: #1a1714; min-height: 58px; border-bottom: none; border-radius: 0 0 14px 14px; }
   .row.add { min-height: 40px; cursor: pointer; border-bottom: none; }
   .row.add:hover { background: #f5f2ec; }
   .row.add .c { font-size: 12px; color: #bbb5ac; padding-left: 18px; justify-content: flex-start; }
 
+  .row > .c:nth-child(1) { padding-left: 16px; }
+  .row > .c:nth-child(5) { padding-right: 50px; justify-content: flex-end; }
+  .row > .c:nth-child(6) { padding-right: 30px; justify-content: flex-end; }
   .c { padding: 0 16px; display: flex; align-items: center; }
   .c.mid { justify-content: center; }
+  .c.rt { justify-content: flex-end; }
 
   input[type=checkbox] { display: none; }
   .chk {
@@ -74,169 +87,158 @@
 
   .iname { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: #2a2520; white-space: nowrap; overflow: hidden; }
   .ico { font-size: 14px; flex-shrink: 0; }
-  /* 소분류 들여쓰기 */
   .iname.sub { padding-left: 10px; color: #6a5e52; font-size: 12px; }
   .iname.sub::before { content: '└'; color: #c0b8ae; font-size: 11px; flex-shrink: 0; }
 
-  .abtn {
-    background: none; border: none; font-family: inherit; cursor: pointer;
-    font-size: 14px; color: #c8c2b8; line-height: 1; padding: 0 2px; flex-shrink: 0;
-    transition: color .12s;
-  }
+  .abtn { background: none; border: none; font-family: inherit; cursor: pointer; font-size: 14px; color: #c8c2b8; line-height: 1; padding: 0 2px; flex-shrink: 0; transition: color .12s; }
   .abtn:hover { color: #7a6a58; }
   .abtn.rm:hover { color: #c86858; }
 
   .lvs { display: flex; gap: 2px; }
-  .lv {
-    padding: 2px 5px; border-radius: 4px;
-    border: 1.5px solid #ddd8d0; background: #fff;
-    font-size: 10px; font-weight: 600; color: #c0b8ae;
-    cursor: pointer; font-family: inherit; transition: all .12s; line-height: 1.5;
-  }
+  .lv { padding: 2px 5px; border-radius: 4px; border: 1.5px solid #ddd8d0; background: #fff; font-size: 10px; font-weight: 600; color: #c0b8ae; cursor: pointer; font-family: inherit; transition: all .12s; line-height: 1.5; }
   .lv:hover { border-color: #a89880; color: #7a6a58; }
   .lv.on { background: #7a5c3a; border-color: #7a5c3a; color: #fff; }
 
   .sqs { display: flex; gap: 4px; }
-  .sq { width: 17px; height: 17px; border-radius: 3px; background: #d8d2c8; transition: background .2s; }
+  .sq { width: 17px; height: 17px; border-radius: 3px; background: #ede9e3; transition: background .2s; }
   .sq.on { background: #7a6a58; }
 
-  /* 커스텀 드롭다운 */
+  .wks { display: flex; gap: 5px; }
+  .wk { padding: 3px 7px; border-radius: 5px; background: #ede9e3; font-size: 10px; font-weight: 600; color: #b8b0a4; transition: background .2s, color .2s; }
+  .wk.on { background: #7a6a58; color: #fff; }
+
   .dd-wrap { position: relative; width: 158px; user-select: none; }
-  .dd-btn {
-    width: 158px; height: 32px;
-    border: 1.5px solid #d8d2c8; border-radius: 9px;
-    padding: 0 28px 0 12px;
-    font-size: 12px; font-weight: 500; font-family: inherit;
-    color: #a89888; background: #fff;
-    cursor: pointer; display: flex; align-items: center;
-    transition: border-color .15s; position: relative;
-  }
-  .dd-btn::after {
-    content: ''; position: absolute; right: 10px; top: 50%;
-    transform: translateY(-50%);
-    width: 0; height: 0;
-    border-left: 4px solid transparent; border-right: 4px solid transparent;
-    border-top: 5px solid #b0a090; transition: transform .2s;
-  }
+  .dd-btn { width: 158px; height: 32px; border: 1.5px solid #d8d2c8; border-radius: 9px; padding: 0 28px 0 12px; font-size: 12px; font-weight: 500; font-family: inherit; color: #a89888; background: #fff; cursor: pointer; display: flex; align-items: center; transition: border-color .15s; position: relative; }
+  .dd-btn::after { content: ''; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid #b0a090; transition: transform .2s; }
   .dd-btn.ok { color: #3a2e22; border-color: #a89070; font-weight: 600; }
   .dd-btn.open { border-color: #9a8870; border-radius: 9px 9px 0 0; }
   .dd-btn.open::after { transform: translateY(-50%) rotate(180deg); }
-  .dd-list {
-    display: none; position: absolute; top: 100%; left: 0; width: 158px;
-    background: #fff; border: 1.5px solid #9a8870; border-top: none;
-    border-radius: 0 0 9px 9px; overflow: hidden; z-index: 999;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.10);
-  }
+  .dd-list { display: none; position: absolute; top: 100%; left: 0; width: 158px; background: #fff; border: 1.5px solid #9a8870; border-top: none; border-radius: 0 0 9px 9px; overflow: hidden; z-index: 999; box-shadow: 0 6px 18px rgba(0,0,0,0.10); }
   .dd-list.open { display: block; }
-  .dd-item {
-    padding: 8px 12px; font-size: 12px; font-weight: 500; font-family: inherit;
-    color: #6a5e52; cursor: pointer; border-bottom: 1px solid #eeebe5; transition: background .1s;
-  }
+  .dd-item { padding: 8px 12px; font-size: 12px; font-weight: 500; font-family: inherit; color: #6a5e52; cursor: pointer; border-bottom: 1px solid #eeebe5; transition: background .1s; }
   .dd-item:last-child { border-bottom: none; }
   .dd-item:hover { background: #f7f3ed; }
   .dd-item.selected { color: #3a2e22; font-weight: 700; background: #f2eeea; }
 
   .ctr { display: flex; align-items: center; gap: 7px; width: 158px; }
-  .cbtn {
-    width: 28px; height: 28px; border-radius: 7px; border: 1.5px solid #d8d2c8;
-    background: #fff; cursor: pointer; font-size: 13px; font-family: inherit; color: #a89888;
-    display: flex; align-items: center; justify-content: center; transition: all .12s; flex-shrink: 0;
-  }
+  .cbtn { width: 28px; height: 28px; border-radius: 7px; border: 1.5px solid #d8d2c8; background: #fff; cursor: pointer; font-size: 13px; font-family: inherit; color: #a89888; display: flex; align-items: center; justify-content: center; transition: all .12s; flex-shrink: 0; }
   .cbtn:hover { border-color: #9a8870; color: #7a6a58; }
-  .ctag {
-    flex: 1; padding: 5px 0; border-radius: 7px; font-size: 12px; font-weight: 600;
-    background: #eee8e0; color: #8a7868; text-align: center;
-  }
+  .ctag { flex: 1; padding: 5px 0; border-radius: 7px; font-size: 12px; font-weight: 600; background: #eee8e0; color: #8a7868; text-align: center; }
 
   .price { font-size: 13px; color: #4a3e32; font-feature-settings: "tnum"; }
-
+  .ref-price { font-size: 11px; color: #c0b4a4; font-feature-settings: "tnum"; }
   .row.total .c { justify-content: center; }
   .tot-lbl { font-size: 14px; color: #fff; font-weight: 700; }
   .tot-val { font-size: 15px; color: #c0a888; font-weight: 700; }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 <div class="container">
-  <h1>iloom 3D Artwork Cost</h1>
-  <p class="subtitle">제품 1종 기준</p>
+  <div class="title-bar">
+    <div class="titles">
+      <h1>iloom 3D Artwork Cost</h1>
+      <p class="subtitle">제품 1종 기준</p>
+    </div>
+    <div style="display:flex;gap:8px">
+    <button class="reset-btn" onclick="captureScreen()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="4"/>
+      </svg>
+      화면캡쳐
+    </button>
+    <button class="reset-btn" onclick="resetAll()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+        <path d="M3 3v5h5"/>
+      </svg>
+      초기화
+    </button>
+    </div>
+  </div>
   <div class="table-outer">
     <div class="table-wrap">
 
       <div class="row hd">
-        <div class="c"></div>
         <div class="c hd-name">항목</div>
         <div class="c mid">난이도</div>
         <div class="c mid">기간</div>
         <div class="c mid">수량</div>
-        <div class="c mid">단가</div>
+        <div class="c mid"></div>
+        <div class="c hd-price">단가</div>
       </div>
 
-      <!-- ① 제품 3D 모델링 -->
       <div class="row sec-main"><div class="c">🛋️ 제품 3D 모델링</div></div>
       <div id="mRows"></div>
 
-      <!-- ② 제품 렌더 -->
       <div class="row sec-main"><div class="c">🖼️ 제품 렌더</div></div>
       <div id="renderRows"></div>
 
-      <!-- ③ 디테일 컷 -->
       <div class="row sec-main"><div class="c">🔍 디테일 컷</div></div>
       <div id="detailRows"></div>
 
-      <!-- ④ 스타일 컷 -->
       <div class="row sec-main"><div class="c">⭐ 스타일 컷</div></div>
       <div id="styleRows"></div>
 
-      <!-- ⑤ 애니메이션 -->
       <div class="row sec-main"><div class="c">🎬 애니메이션</div></div>
       <div id="aniRows"></div>
 
       <div class="row total" id="totRow"></div>
-      <div class="row add"><div class="c" style="grid-column:1/-1">＋ 항목 추가</div></div>
     </div>
   </div>
 </div>
 
 <script>
-// ── 제품 3D 모델링 드롭다운 타입 ──
 const MTYPES = [
-  {label:'모델링 유형',  days:0, price:0},
-  {label:'모델링 (상)',  days:9, price:500000},
-  {label:'모델링 (중)',  days:6, price:250000},
-  {label:'모델링 (하)',  days:3, price:100000},
-  {label:'사이즈/구성',  days:2, price:100000},
+  {label:'모델링 유형',           days:0, price:0,      lv:null},
+  {label:'(상) 소파',             days:9, price:500000, lv:0},
+  {label:'(상) 데스크체어',       days:9, price:500000, lv:0},
+  {label:'(상) 책상세트',         days:9, price:500000, lv:0},
+  {label:'(중) 식탁',             days:6, price:250000, lv:1},
+  {label:'(중) 식탁의자',         days:6, price:250000, lv:1},
+  {label:'(중) 침대프레임',       days:6, price:250000, lv:1},
+  {label:'(하) 소파 모듈',        days:3, price:100000, lv:2},
+  {label:'(하) 부품 및 악세사리', days:3, price:100000, lv:2},
 ];
 
+// 제품 3D 모델링 상중하 기간/가격
+const MLV = [
+  {days:4, price:500000},  // 상
+  {days:3, price:250000},  // 중
+  {days:2, price:100000},  // 하
+];
 const LVS = ['상','중','하'];
 
-// ── 각 섹션 기본 항목 ──
 const DEF_RENDER = [
-  {id:101, name:'제품 단품컷',      ico:'🪑', cut:1, price:150000, days:2, lv:1, def:true},
-  {id:102, name:'제품 (앵글,컬러)', ico:'🔄', cut:1, price: 50000, days:1, lv:1, def:true},
-  {id:104, name:'마감재 변경',      ico:'🎨', cut:1, price:100000, days:3, lv:1, def:true},
+  {id:101, name:'제품 단품컷', ico:'🪑', cut:0, price:150000, days:2, lv:null, def:true, noLv:true},
+  {id:102, name:'마감재 추가', ico:'🎨', cut:0, price:150000, days:1, lv:null, def:true, noLv:true},
+  {id:103, name:'앵글 추가',   ico:'🔄', cut:0, price: 50000, days:1, lv:null, def:true, noLv:true},
+  {id:104, name:'단품 연출컷', ico:'🎨', cut:0, price:150000, days:2, lv:null, def:true, noLv:true},
 ];
 const DEF_DETAIL = [
-  {id:201, name:'디테일컷',  ico:'🔍', cut:1, price:250000, days:4, lv:0, def:true},
-  
-  {id:203, name:'마감재 교체',   ico:'🔎', cut:1, price: 50000, days:1, lv:1, def:true},
+  {id:201, name:'디테일컷',    ico:'🔍', cut:0, price:0, days:0, lv:null, def:true,
+   lvData:[{days:3,price:300000},{days:2,price:200000},{days:1,price:100000}]},
+  {id:203, name:'마감재 교체', ico:'🔎', cut:0, price: 50000, days:1, lv:null, def:true, noLv:true},
 ];
 const DEF_STYLE = [
-  {id:301, name:'메인컷',               ico:'🏠', cut:1, price:700000, days:9, lv:0, def:true},
-  {id:304, name:'메인컷 (앵글/라이팅)', ico:'🌃', cut:1, price:150000, days:2, lv:1, def:true},
-  {id:305, name:'메인컷 (라이프스타일)',ico:'🐱', cut:1, price:100000, days:2, lv:1, def:true},
+  {id:301, name:'메인컷',                ico:'🏠', cut:0, price:0, days:0, lv:null, def:true, lvData:[{days:7,price:700000},{days:5,price:500000},{days:3,price:300000}]},
+  {id:304, name:'메인컷 (앵글/라이팅)',  ico:'🌃', cut:0, price:150000, days:2, lv:null, def:true, noLv:true},
+  {id:305, name:'메인컷 (라이프스타일)',ico:'🐱', cut:0, price:100000, days:2, lv:null, def:true, noLv:true},
 ];
 const DEF_ANI = [
-  {id:401, name:'아이코닉 영상',   ico:'🎬', cut:1, price:7000000, days:9, lv:0, def:true},
-  {id:404, name:'공간무드 영상',   ico:'📽️', cut:1, price:5000000, days:7, lv:1, def:true},
-  {id:405, name:'기존 컷 편집',    ico:'✂️', cut:1, price: 500000, days:2, lv:1, def:true},
-  {id:406, name:'USP 디테일 클립', ico:'📲', cut:1, price:1500000, days:3, lv:1, def:true},
+  {id:401, name:'아이코닉 영상',   ico:'🎬', cut:0, price:0, days:0, lv:null, def:true, isWeek:true, lvData:[{days:5,price:7000000},{days:4,price:6000000},{days:3,price:5000000}]},
+  {id:404, name:'공간무드 영상',   ico:'📽️', cut:0, price:0, days:0, lv:null, def:true, isWeek:true, lvData:[{days:5,price:5000000},{days:4,price:4000000},{days:3,price:3000000}]},
+  {id:405, name:'기존 컷 편집',    ico:'✂️', cut:0, price: 300000, days:1, lv:null, def:true, isWeek:true, noLv:true},
+  {id:406, name:'USP 디테일 클립', ico:'📲', cut:0, price: 800000, days:2, lv:null, def:true, isWeek:true, noLv:true},
 ];
 
-function load(){try{const s=localStorage.getItem('iloom_v13');if(s)return JSON.parse(s);}catch(e){}return null;}
-function save(){try{localStorage.setItem('iloom_v13',JSON.stringify({M,R,D,S,A,mc,ic}));}catch(e){}}
+function freshM(){ return [{id:1,ti:0,checked:false,lv:null},{id:'mx',name:'모델링 변형',ico:'📐',cut:0,price:100000,days:2,lv:null,checked:false,isMx:true}]; }
 
-const sv = load();
-let M  = sv?sv.M : [{id:1,ti:0,checked:false}];
+function load(){try{const s=localStorage.getItem('iloom_v79');if(s)return JSON.parse(s);}catch(e){}return null;}
+function save(){try{localStorage.setItem('iloom_v79',JSON.stringify({M,R,D,S,A,mc,ic}));}catch(e){}}
+
+const sv=load();
+let M  = sv?sv.M : freshM();
 let R  = sv?sv.R : DEF_RENDER.map(f=>({...f,checked:false}));
 let D  = sv?sv.D : DEF_DETAIL.map(f=>({...f,checked:false}));
 let S  = sv?sv.S : DEF_STYLE.map(f=>({...f,checked:false}));
@@ -245,134 +247,151 @@ let mc = sv?sv.mc: 2;
 let ic = sv?sv.ic: 500;
 
 const fmt = n => n.toLocaleString('ko-KR')+'원';
-const sqs = n => Array.from({length:9},(_,i)=>`<div class="sq${i<n?' on':''}"></div>`).join('');
+const fmtRef = n => n.toLocaleString('ko-KR');
+const sqs = n => Array.from({length:10},(_,i)=>`<div class="sq${i<n?' on':''}"></div>`).join('');
+const wks = n => Array.from({length:5}, (_,i)=>`<div class="wk${i<n?' on':''}">Week</div>`).join('');
 
-// ── 커스텀 드롭다운 ──
-document.addEventListener('click', e=>{
-  if(!e.target.closest('.dd-wrap')) closeAllDd();
-});
+function captureScreen(){
+  const el = document.querySelector('.table-outer');
+  html2canvas(el, {scale:2, backgroundColor:'#fff', useCORS:true}).then(canvas=>{
+    const a=document.createElement('a');
+    a.download='iloom_cost_'+new Date().toISOString().slice(0,10)+'.png';
+    a.href=canvas.toDataURL('image/png');
+    a.click();
+  });
+}
+function resetAll(){
+  if(!confirm('모든 항목을 초기화할까요?')) return;
+  M=freshM();
+  R=DEF_RENDER.map(f=>({...f,checked:false}));
+  D=DEF_DETAIL.map(f=>({...f,checked:false}));
+  S=DEF_STYLE.map(f=>({...f,checked:false}));
+  A=DEF_ANI.map(f=>({...f,checked:false}));
+  mc=2; ic=500;
+  makeHandlers(R,'R'); makeHandlers(D,'D'); makeHandlers(S,'S'); makeHandlers(A,'A');
+  render();
+}
+
+document.addEventListener('click', e=>{ if(!e.target.closest('.dd-wrap')) closeAllDd(); });
 function closeAllDd(){
   document.querySelectorAll('.dd-list.open').forEach(el=>el.classList.remove('open'));
   document.querySelectorAll('.dd-btn.open').forEach(el=>el.classList.remove('open'));
 }
-function toggleDd(id){
-  const btn=document.getElementById('ddb-'+id);
-  const lst=document.getElementById('ddl-'+id);
-  if(!btn||!lst)return;
-  const was=lst.classList.contains('open');
-  closeAllDd();
-  if(!was){btn.classList.add('open');lst.classList.add('open');}
-}
-function selectDd(mId,ti){
-  const m=M.find(x=>x.id===mId); if(m){m.ti=ti;}
-  closeAllDd(); render();
+function toggleDd(id){ const btn=document.getElementById('ddb-'+id),lst=document.getElementById('ddl-'+id); if(!btn||!lst)return; const was=lst.classList.contains('open'); closeAllDd(); if(!was){btn.classList.add('open');lst.classList.add('open');} }
+function selectDd(mId,ti){ 
+  const m=M.find(x=>x.id===mId); 
+  if(m){
+    m.ti=ti;
+    const mt=MTYPES[ti];
+    if(mt.lv!==null){ m.lv=mt.lv; m.days=MLV[mt.lv].days; }
+    else { m.lv=null; m.days=0; }
+  } 
+  closeAllDd(); render(); 
 }
 function makeDd(m){
-  const t=MTYPES[m.ti]; const ok=m.ti>0;
-  return `<div class="dd-wrap">
-    <div class="dd-btn${ok?' ok':''}" id="ddb-${m.id}" onclick="toggleDd(${m.id});event.stopPropagation()">${t.label}</div>
-    <div class="dd-list" id="ddl-${m.id}">
-      ${MTYPES.map((o,i)=>`<div class="dd-item${m.ti===i?' selected':''}" onclick="selectDd(${m.id},${i})">${o.label}</div>`).join('')}
-    </div></div>`;
+  const t=MTYPES[m.ti], ok=m.ti>0;
+  return `<div class="dd-wrap"><div class="dd-btn${ok?' ok':''}" id="ddb-${m.id}" onclick="toggleDd(${m.id});event.stopPropagation()">${t.label}</div><div class="dd-list" id="ddl-${m.id}">${MTYPES.map((o,i)=>`<div class="dd-item${m.ti===i?' selected':''}" onclick="selectDd(${m.id},${i})">${o.label}</div>`).join('')}</div></div>`;
 }
 
-// ── 모델링 렌더 ──
 function renderM(){
   const w=document.getElementById('mRows'); w.innerHTML='';
   M.forEach((m,idx)=>{
-    const t=MTYPES[m.ti], row=document.createElement('div');
+    const row=document.createElement('div');
     row.className='row'+(m.checked?' on':'');
-    row.innerHTML=`
-      <div class="c mid"><label style="cursor:pointer"><input type="checkbox" ${m.checked?'checked':''} onchange="chkM(${m.id},this.checked)"><span class="chk"></span></label></div>
-      <div class="c"><div class="iname">
-        ${idx===0?`<button class="abtn" onclick="addM()">＋</button>`:`<button class="abtn rm" onclick="delM(${m.id})">－</button>`}
-        <span class="ico">📦</span>제품 3D 모델링
-      </div></div>
-      <div class="c mid"></div>
-      <div class="c mid"><div class="sqs">${sqs(t.days)}</div></div>
-      <div class="c mid">${makeDd(m)}</div>
-      <div class="c mid">${t.price>0?`<span class="price">${fmt(t.price)}</span>`:''}</div>`;
+    if(m.isMx){
+      row.innerHTML=`
+        <div class="c"><div class="iname"><button class="abtn" onclick="cloneMx()">＋</button><span class="ico">${m.ico}</span>${m.name}</div></div>
+        <div class="c mid"></div>
+        <div class="c mid"><div class="sqs">${sqs(m.cut*2)}</div></div>
+        <div class="c mid"><div class="ctr"><button class="cbtn" onclick="cutMx(-1)">－</button><span class="ctag">${m.cut}개</span><button class="cbtn" onclick="cutMx(1)">＋</button></div></div>
+        <div class="c mid"><span class="ref-price">${fmtRef(m.price||100000)}</span></div>
+        <div class="c rt">${m.cut>0?`<span class="price">${fmt(m.cut*(m.price||100000))}</span>`:''}</div>`;
+    } else {
+      const t=MTYPES[m.ti];
+      const mlv = m.lv!==null ? MLV[m.lv] : null;
+      const lvBtns=LVS.map((l,li)=>`<button class="lv${m.lv===li?' on':''}" onclick="lvM(${m.id},${li})">${l}</button>`).join('');
+      row.innerHTML=`
+        <div class="c"><div class="iname">${idx===0?`<button class="abtn" onclick="addM()">＋</button>`:`<button class="abtn rm" onclick="delM(${m.id})">－</button>`}<span class="ico">📦</span>제품 3D 모델링</div></div>
+        <div class="c mid"><div class="lvs">${lvBtns}</div></div>
+        <div class="c mid"><div class="sqs">${sqs(m.days||0)}</div></div>
+        <div class="c mid">${makeDd(m)}</div>
+        <div class="c mid"><span class="ref-price">±${fmtRef(MLV[1].price)}</span></div>
+        <div class="c rt">${mlv?`<span class="price">${fmt(mlv.price)}</span>`:''}</div>`;
+    }
     w.appendChild(row);
   });
 }
 
-// ── 일반 항목 렌더 (제품렌더/디테일컷/스타일컷/애니메이션) ──
 function renderSection(arr, elId, setFns){
   const w=document.getElementById(elId); w.innerHTML='';
   arr.forEach(item=>{
     const row=document.createElement('div');
     row.className='row'+(item.checked?' on':'');
-    const lvBtns=LVS.map((l,li)=>
-      `<button class="lv${item.lv===li?' on':''}" onclick="${setFns.lv}(${item.id},${li})">${l}</button>`
-    ).join('');
-    const btn=item.def
-      ?`<button class="abtn" onclick="${setFns.clone}(${item.id})">＋</button>`
-      :`<button class="abtn rm" onclick="${setFns.del}(${item.id})">－</button>`;
-    const isSub = item.name.startsWith('└');
+    const lvBtns=item.noLv?'':`<div class="lvs">${LVS.map((l,li)=>`<button class="lv${item.lv===li?' on':''}" onclick="${setFns.lv}(${item.id},${li})">${l}</button>`).join('')}</div>`;
+    const btn=item.def?`<button class="abtn" onclick="${setFns.clone}(${item.id})">＋</button>`:`<button class="abtn rm" onclick="${setFns.del}(${item.id})">－</button>`;
     row.innerHTML=`
-      <div class="c mid"><label style="cursor:pointer"><input type="checkbox" ${item.checked?'checked':''} onchange="${setFns.chk}(${item.id},this.checked)"><span class="chk"></span></label></div>
-      <div class="c"><div class="iname${isSub?' sub':''}">
-        ${btn}<span class="ico">${item.ico}</span>${item.name}
-      </div></div>
-      <div class="c mid"><div class="lvs">${lvBtns}</div></div>
-      <div class="c mid"><div class="sqs">${sqs(item.days)}</div></div>
-      <div class="c mid">
-        <div class="ctr">
-          <button class="cbtn" onclick="${setFns.cut}(${item.id},-1)">－</button>
-          <span class="ctag">${item.cut}컷</span>
-          <button class="cbtn" onclick="${setFns.cut}(${item.id},1)">＋</button>
-        </div>
-      </div>
-      <div class="c mid"><span class="price">${fmt(item.price)}</span></div>`;
+      <div class="c"><div class="iname">${btn}<span class="ico">${item.ico}</span>${item.name}</div></div>
+      <div class="c mid">${lvBtns}</div>
+      <div class="c mid"><div class="${item.isWeek?'wks':'sqs'}">${item.isWeek?wks(item.cut*item.days):sqs(item.cut*item.days)}</div></div>
+      <div class="c mid"><div class="ctr"><button class="cbtn" onclick="${setFns.cut}(${item.id},-1)">－</button><span class="ctag">${item.cut}컷</span><button class="cbtn" onclick="${setFns.cut}(${item.id},1)">＋</button></div></div>
+      <div class="c mid">${(()=>{
+        if(item.noLv && item.price>0) return `<span class="ref-price">${fmtRef(item.price)}</span>`;
+        if(item.lvData && item.lvData[1]) return `<span class="ref-price">±${fmtRef(item.lvData[1].price)}</span>`;
+        if(!item.noLv && item.price>0) return `<span class="ref-price">±${fmtRef(item.price)}</span>`;
+        return '';
+      })()}</div>
+      <div class="c rt">${item.cut>0&&item.price>0?`<span class="price">${fmt(item.cut*item.price)}</span>`:''}</div>`;
     w.appendChild(row);
   });
 }
 
 function renderTot(){
-  const r=document.getElementById('totRow');
-  let tc=0,tp=0;
-  [...R,...D,...S,...A].forEach(i=>{if(i.checked){tc+=i.cut;tp+=i.cut*i.price;}});
-  M.forEach(m=>{if(m.checked&&MTYPES[m.ti].price>0){tp+=MTYPES[m.ti].price;}});
-  r.innerHTML=`
-    <div class="c"></div>
-    <div class="c" style="justify-content:center"><span class="tot-lbl">합계</span></div>
-    <div class="c"></div><div class="c"></div>
-    <div class="c" style="justify-content:center"><span class="tot-val">${tc}컷</span></div>
-    <div class="c" style="justify-content:center"><span class="tot-val">${fmt(tp)}</span></div>`;
+  const r=document.getElementById('totRow'); let tc=0,tp=0;
+  [...R,...D,...S,...A].forEach(i=>{if(i.cut>0){tc+=i.cut;tp+=i.cut*i.price;}});
+  M.forEach(m=>{
+    if(m.isMx){if(m.cut>0){tc+=m.cut;tp+=m.cut*(m.price||100000);}}
+    else{const mlv=m.lv!==null?MLV[m.lv]:null; if(mlv){tp+=mlv.price;}}
+  });
+  r.innerHTML=`<div class="c" style="justify-content:center"><span class="tot-lbl">합계</span></div><div class="c"></div><div class="c"></div><div class="c" style="justify-content:center"><span class="tot-val">${tc}컷</span></div><div class="c"></div><div class="c rt" style="white-space:nowrap;padding-right:30px"><span class="tot-val">${fmt(tp)}</span></div>`;
 }
 
-function render(){
-  renderM();
-  renderSection(R,'renderRows',{lv:'lvR',clone:'cloneR',del:'delR',chk:'chkR',cut:'cutR'});
-  renderSection(D,'detailRows',{lv:'lvD',clone:'cloneD',del:'delD',chk:'chkD',cut:'cutD'});
-  renderSection(S,'styleRows', {lv:'lvS',clone:'cloneS',del:'delS',chk:'chkS',cut:'cutS'});
-  renderSection(A,'aniRows',   {lv:'lvA',clone:'cloneA',del:'delA',chk:'chkA',cut:'cutA'});
-  renderTot();
-  save();
-}
+function render(){ renderM(); renderSection(R,'renderRows',{lv:'lvR',clone:'cloneR',del:'delR',chk:'chkR',cut:'cutR'}); renderSection(D,'detailRows',{lv:'lvD',clone:'cloneD',del:'delD',chk:'chkD',cut:'cutD'}); renderSection(S,'styleRows',{lv:'lvS',clone:'cloneS',del:'delS',chk:'chkS',cut:'cutS'}); renderSection(A,'aniRows',{lv:'lvA',clone:'cloneA',del:'delA',chk:'chkA',cut:'cutA'}); renderTot(); save(); }
 
-// ── 모델링 핸들러 ──
-function addM(){M.push({id:mc++,ti:0,checked:false});render();}
+function addM(){M.splice(M.length-1,0,{id:mc++,ti:0,checked:false,lv:null});render();}
 function delM(id){M=M.filter(m=>m.id!==id);render();}
 function chkM(id,v){const m=M.find(m=>m.id===id);if(m){m.checked=v;render();}}
+function lvM(id,lv){lv=parseInt(lv);const m=M.find(m=>m.id===id);if(m){m.lv=m.lv===lv?null:lv; if(m.lv!==null&&MLV[m.lv])m.days=MLV[m.lv].days; else m.days=0; render();}}
+function chkMx(v){const m=M.find(m=>m.isMx);if(m){m.checked=v;if(v&&m.cut===0)m.cut=1;if(!v)m.cut=0;render();}}
+function cutMx(d){const m=M.find(m=>m.isMx);if(m){m.cut=Math.max(0,m.cut+d);render();}}
+function cloneMx(){const m=M.find(m=>m.isMx);if(m){m.cut=Math.max(1,m.cut+1);if(!m.checked)m.checked=true;render();}}
 
-// ── 섹션별 핸들러 생성 ──
-function makeHandlers(arr, prefix){
-  window[`lv${prefix}`]    = (id,lv)=>{const i=arr.find(x=>x.id===id);if(i){i.lv=lv;render();}};
-  window[`chk${prefix}`]   = (id,v) =>{const i=arr.find(x=>x.id===id);if(i){i.checked=v;render();}};
-  window[`cut${prefix}`]   = (id,d) =>{const i=arr.find(x=>x.id===id);if(i){i.cut=Math.max(1,i.cut+d);render();}};
-  window[`del${prefix}`]   = (id)   =>{arr.splice(arr.findIndex(x=>x.id===id),1);render();};
-  window[`clone${prefix}`] = (sid)  =>{
-    const src=arr.find(x=>x.id===sid);if(!src)return;
-    const idx=arr.findIndex(x=>x.id===sid);
-    arr.splice(idx+1,0,{...src,id:ic++,def:false});render();
-  };
+function showToast(msg){
+  let t=document.getElementById('toast');
+  if(!t){t=document.createElement('div');t.id='toast';t.style.cssText='position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:#3a2e22;color:#fff;padding:10px 22px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;transition:opacity .2s;z-index:9999;pointer-events:none;';document.body.appendChild(t);}
+  t.textContent=msg; t.style.opacity='1';
+  clearTimeout(t._t); t._t=setTimeout(()=>t.style.opacity='0',1800);
 }
-makeHandlers(R,'R');
-makeHandlers(D,'D');
-makeHandlers(S,'S');
-makeHandlers(A,'A');
 
+function makeHandlers(arr, prefix){
+  window[`lv${prefix}`] = (id,lv)=>{
+    id=parseInt(id); lv=parseInt(lv);
+    const i=arr.find(x=>x.id===id); if(!i) return;
+    i.lv = i.lv===lv ? null : lv;
+    if(i.lv!==null && i.lvData&&i.lvData[i.lv]){i.price=i.lvData[i.lv].price; i.days=i.lvData[i.lv].days;}
+    else if(i.lv===null){i.days=0; if(i.lvData)i.price=0;}
+    render();
+  };
+  window[`chk${prefix}`] = (id,v)=>{id=parseInt(id);const i=arr.find(x=>x.id===id);if(i){i.checked=v;if(v&&i.cut===0)i.cut=1;if(!v)i.cut=0;render();}};
+  window[`cut${prefix}`] = (id,d)=>{
+    id=parseInt(id);
+    const i=arr.find(x=>x.id===id); if(!i) return;
+    if(d>0 && !i.noLv && i.lv===null){ showToast('난이도를 선택해 주세요'); return; }
+    i.cut=Math.max(0,i.cut+d); render();
+  };
+  window[`del${prefix}`]   = (id)  =>{id=parseInt(id);arr.splice(arr.findIndex(x=>x.id===id),1);render();};
+  window[`clone${prefix}`] = (sid) =>{sid=parseInt(sid);const src=arr.find(x=>x.id===sid);if(!src)return;const idx=arr.findIndex(x=>x.id===sid);arr.splice(idx+1,0,{...src,id:ic++,def:false});render();};
+}
+makeHandlers(R,'R'); makeHandlers(D,'D'); makeHandlers(S,'S'); makeHandlers(A,'A');
 render();
 </script>
 </body>

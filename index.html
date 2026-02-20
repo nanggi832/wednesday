@@ -138,7 +138,7 @@
   <div class="title-bar">
     <div class="titles">
       <h1>iloom 3D Artwork Cost</h1>
-      <p class="subtitle">제품 1종 기준</p>
+      <p class="subtitle">제품 1종 기준 &nbsp;<span style="color:#7a5c3a;font-weight:600">iloom(김수연) &lt;&gt; Wednesday</span></p>
     </div>
     <div style="display:flex;gap:8px">
     <button class="reset-btn" onclick="captureScreen()">
@@ -235,8 +235,8 @@ const DEF_ANI = [
 
 function freshM(){ return [{id:1,ti:0,checked:false,lv:null},{id:'mx',name:'모델링 변형',ico:'📐',cut:0,price:100000,days:2,lv:null,checked:false,isMx:true}]; }
 
-function load(){try{const s=localStorage.getItem('iloom_v82');if(s)return JSON.parse(s);}catch(e){}return null;}
-function save(){try{localStorage.setItem('iloom_v82',JSON.stringify({M,R,D,S,A,mc,ic}));}catch(e){}}
+function load(){try{const s=localStorage.getItem('iloom_v83');if(s)return JSON.parse(s);}catch(e){}return null;}
+function save(){try{localStorage.setItem('iloom_v83',JSON.stringify({M,R,D,S,A,mc,ic}));}catch(e){}}
 
 const sv=load();
 let M  = sv?sv.M : freshM();

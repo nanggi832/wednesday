@@ -224,6 +224,7 @@ const DEF_STYLE = [
   {id:301, name:'메인컷',                ico:'🏠', cut:0, price:0, days:0, lv:null, def:true, lvData:[{days:7,price:700000},{days:5,price:500000},{days:3,price:300000}]},
   {id:304, name:'메인컷 (앵글/라이팅)',  ico:'🌃', cut:0, price:150000, days:2, lv:null, def:true, noLv:true},
   {id:305, name:'메인컷 (라이프스타일)',ico:'🐱', cut:0, price:100000, days:2, lv:null, def:true, noLv:true},
+  {id:306, name:'기타 추출비',            ico:'📎', cut:0, price: 50000, days:1, lv:null, def:true, noLv:true},
 ];
 const DEF_ANI = [
   {id:401, name:'아이코닉 영상',   ico:'🎬', cut:0, price:0, days:0, lv:null, def:true, isWeek:true, lvData:[{days:5,price:7000000},{days:4,price:6000000},{days:3,price:5000000}]},
@@ -234,8 +235,8 @@ const DEF_ANI = [
 
 function freshM(){ return [{id:1,ti:0,checked:false,lv:null},{id:'mx',name:'모델링 변형',ico:'📐',cut:0,price:100000,days:2,lv:null,checked:false,isMx:true}]; }
 
-function load(){try{const s=localStorage.getItem('iloom_v79');if(s)return JSON.parse(s);}catch(e){}return null;}
-function save(){try{localStorage.setItem('iloom_v79',JSON.stringify({M,R,D,S,A,mc,ic}));}catch(e){}}
+function load(){try{const s=localStorage.getItem('iloom_v82');if(s)return JSON.parse(s);}catch(e){}return null;}
+function save(){try{localStorage.setItem('iloom_v82',JSON.stringify({M,R,D,S,A,mc,ic}));}catch(e){}}
 
 const sv=load();
 let M  = sv?sv.M : freshM();
@@ -352,7 +353,9 @@ function renderTot(){
     if(m.isMx){if(m.cut>0){tc+=m.cut;tp+=m.cut*(m.price||100000);}}
     else{const mlv=m.lv!==null?MLV[m.lv]:null; if(mlv){tp+=mlv.price;}}
   });
-  r.innerHTML=`<div class="c" style="justify-content:center"><span class="tot-lbl">합계</span></div><div class="c"></div><div class="c"></div><div class="c" style="justify-content:center"><span class="tot-val">${tc}컷</span></div><div class="c"></div><div class="c rt" style="white-space:nowrap;padding-right:30px"><span class="tot-val">${fmt(tp)}</span></div>`;
+  const now=new Date();
+  const timeStr=now.getFullYear()+'년 '+(now.getMonth()+1)+'월 '+now.getDate()+'일 '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+  r.innerHTML=`<div class="c" style="justify-content:center"><span class="tot-lbl">합계</span></div><div class="c"></div><div class="c" style="justify-content:center;flex-direction:column;gap:3px"><span style="font-size:10px;color:#6a6058;white-space:nowrap">${timeStr}</span></div><div class="c" style="justify-content:center"><span class="tot-val">${tc}컷</span></div><div class="c"></div><div class="c rt" style="white-space:nowrap;padding-right:30px"><span class="tot-val">${fmt(tp)}</span></div>`;
 }
 
 function render(){ renderM(); renderSection(R,'renderRows',{lv:'lvR',clone:'cloneR',del:'delR',chk:'chkR',cut:'cutR'}); renderSection(D,'detailRows',{lv:'lvD',clone:'cloneD',del:'delD',chk:'chkD',cut:'cutD'}); renderSection(S,'styleRows',{lv:'lvS',clone:'cloneS',del:'delS',chk:'chkS',cut:'cutS'}); renderSection(A,'aniRows',{lv:'lvA',clone:'cloneA',del:'delA',chk:'chkA',cut:'cutA'}); renderTot(); save(); }
